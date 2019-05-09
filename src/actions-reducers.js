@@ -62,9 +62,7 @@ console.log("ID 1001 details:", initialState.cats['1001'])
 // window.setActionEat = setActionEat
 // window.setActionPlay = setActionPlay
 
-let id = Object.keys(initialState.cats);
 
-console.log(id[0])
 
 const ACTION_SET_NAME = 'ACTION_SET_NAME'
 export function setName(id, name) {
@@ -94,11 +92,10 @@ window.setActivity = setActivity
 
 const ACTION_ADD_CAT = 'ACTION_ADD_CAT'
 export function addCat(name, activity) {
-    let id = Math.floor(Math.random() * 9999) + 1000 
+    
     return {
         type: ACTION_ADD_CAT,
         payload: {
-            id,
             name,
             activity
         }
@@ -168,7 +165,7 @@ export function setNameAndActivity( state=initialState.cats, action={type: ''} )
     switch(action.type) {
         case ACTION_SET_NAME:
             let newState = {};
-            
+
             Object.keys(state).forEach(id => {
                 if (id === action.payload.id) {
                     newState[id]={
@@ -181,15 +178,7 @@ export function setNameAndActivity( state=initialState.cats, action={type: ''} )
                 }
             }
             })
-        // if (state === '1001'){
-        //     return {
-        //         ...state,
-        //         name: action.payload.name
-        //     } 
-        //     } else {
-        //         return 'noooope'
-        //     }
-        return newState
+                return newState
         break;
         case ACTION_SET_ACTIVITY:
             let newState2 = {};
@@ -207,13 +196,18 @@ export function setNameAndActivity( state=initialState.cats, action={type: ''} )
             });
                 return newState2
         break;
-        // case ACTION_ADD_CAT:
-        //     return {
-        //         ...state,
-        //         id: 
-        //         activity: action.payload.activity
-        //     }
-        // break;
+        case ACTION_ADD_CAT:
+            let id = Math.floor(Math.random() * 9999) + 1000
+            console.log(id)
+            return {
+                ...state,
+                [id]: {
+                    name: action.payload.name,
+                    activity: action.payload.activity,
+
+                }
+            }
+        break;
         default:
             return state
         break;
